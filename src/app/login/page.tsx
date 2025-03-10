@@ -1,7 +1,7 @@
 // src/app/login/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Briefcase, MailIcon, LockIcon, Loader2 } from "lucide-react";
@@ -13,7 +13,8 @@ import { MainLayout } from "@/components/layout/main-layout";
 import { useApi } from "@/contexts/ApiContext";
 import { PATHS } from "@/lib/constants";
 
-export default function LoginPage() {
+// Component that uses useSearchParams safely
+function LoginForm() {
   const { login, isLoading } = useApi();
   const searchParams = useSearchParams();
   const registered = searchParams.get("registered");
@@ -54,6 +55,125 @@ export default function LoginPage() {
   };
 
   return (
+    <>
+      {/* Registration Success Alert */}
+      {registrationMessage && (
+        <Alert className="mb-6 bg-green-500/10 text-green-500 border-green-500/20">
+          <AlertDescription>{registrationMessage}</AlertDescription>
+        </Alert>
+      )}
+
+      {/* Error Alert */}
+      {error && (
+        <Alert className="mb-6 bg-destructive/10 text-destructive border-destructive/20">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      {/* Login Form */}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <div className="relative">
+            <MailIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              id="email"
+              type="email"
+              placeholder="contoh@email.com"
+              className="pl-10"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isLoading}
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password">Kata Sandi</Label>
+            <Link
+              href={PATHS.FORGOT_PASSWORD}
+              className="text-sm text-primary hover:underline"
+            >
+              Lupa Kata Sandi?
+            </Link>
+          </div>
+          <div className="relative">
+            <LockIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              className="pl-10"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={isLoading}
+            />
+          </div>
+        </div>
+
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Memproses...
+            </>
+          ) : (
+            "Masuk"
+          )}
+        </Button>
+      </form>
+    </>
+  );
+}
+
+// Loading fallback
+function LoginFormFallback() {
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <div className="relative">
+          <MailIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+          <Input
+            id="email"
+            type="email"
+            placeholder="contoh@email.com"
+            className="pl-10"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <Label htmlFor="password">Kata Sandi</Label>
+          <span className="text-sm text-primary hover:underline">
+            Lupa Kata Sandi?
+          </span>
+        </div>
+        <div className="relative">
+          <LockIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+          <Input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            className="pl-10"
+            disabled
+          />
+        </div>
+      </div>
+
+      <Button className="w-full" disabled>
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        Memuat...
+      </Button>
+    </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
     <MainLayout>
       <div className="flex items-center justify-center min-h-[calc(100vh-16rem)] px-4">
         <div className="w-full max-w-md">
@@ -71,73 +191,10 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Registration Success Alert */}
-          {registrationMessage && (
-            <Alert className="mb-6 bg-green-500/10 text-green-500 border-green-500/20">
-              <AlertDescription>{registrationMessage}</AlertDescription>
-            </Alert>
-          )}
-
-          {/* Error Alert */}
-          {error && (
-            <Alert className="mb-6 bg-destructive/10 text-destructive border-destructive/20">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <div className="relative">
-                <MailIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="contoh@email.com"
-                  className="pl-10"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Kata Sandi</Label>
-                <Link
-                  href={PATHS.FORGOT_PASSWORD}
-                  className="text-sm text-primary hover:underline"
-                >
-                  Lupa Kata Sandi?
-                </Link>
-              </div>
-              <div className="relative">
-                <LockIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  className="pl-10"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
-
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Memproses...
-                </>
-              ) : (
-                "Masuk"
-              )}
-            </Button>
-          </form>
+          {/* Suspense boundary for the form */}
+          <Suspense fallback={<LoginFormFallback />}>
+            <LoginForm />
+          </Suspense>
 
           {/* Register Link */}
           <div className="mt-6 text-center">

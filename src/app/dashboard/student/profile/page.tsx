@@ -216,10 +216,10 @@ export default function StudentProfilePage() {
   const handleAddSkill = () => {
     if (!selectedSkill) return;
 
-    const skill = availableSkills.find((s) => s.id === selectedSkill);
+    const skill = availableSkills.find((s: Skill) => s.id === selectedSkill);
     if (!skill) return;
 
-    if (!profileData.keahlian.some((s) => s.id === skill.id)) {
+    if (!profileData.keahlian.some((s: Skill) => s.id === skill.id)) {
       setProfileData((prev) => ({
         ...prev,
         keahlian: [...prev.keahlian, skill],
@@ -234,7 +234,7 @@ export default function StudentProfilePage() {
   const handleRemoveSkill = (skillId: string) => {
     setProfileData((prev) => ({
       ...prev,
-      keahlian: prev.keahlian.filter((skill) => skill.id !== skillId),
+      keahlian: prev.keahlian.filter((skill: Skill) => skill.id !== skillId),
     }));
   };
 
@@ -670,7 +670,7 @@ export default function StudentProfilePage() {
                       </div>
                     ) : (
                       <div className="flex flex-wrap gap-2">
-                        {profileData.keahlian.map((skill) => (
+                        {profileData.keahlian.map((skill: Skill) => (
                           <Badge
                             key={skill.id}
                             variant="outline"

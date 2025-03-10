@@ -69,3 +69,28 @@ export function truncateText(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength) + "...";
 }
+
+/**
+ * Formats a number as currency
+ * @param amount Number to format
+ * @param currency Currency code (default: 'IDR')
+ * @param locale Locale for formatting (default: 'id-ID')
+ * @returns Formatted currency string
+ */
+export function formatCurrency(
+  amount: number,
+  currency: string = "IDR",
+  locale: string = "id-ID"
+): string {
+  try {
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  } catch (error) {
+    console.error("Error formatting currency:", error);
+    return String(amount);
+  }
+}

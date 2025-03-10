@@ -34,27 +34,95 @@ export const COLORS = {
   },
 };
 
+// Struktur path yang sesuai dengan routing Next.js
 export const PATHS = {
+  // Halaman publik
   HOME: "/",
   LOGIN: "/login",
   REGISTER: "/register",
-  REGISTER_STUDENT: "/register-student",
-  REGISTER_COMPANY: "/register-company",
+  REGISTER_STUDENT: "/register/student",
+  REGISTER_COMPANY: "/register/company",
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
-  DASHBOARD_STUDENT: "/dashboard/student",
-  DASHBOARD_COMPANY: "/dashboard/company",
-  DASHBOARD_ADMIN: "/dashboard/admin",
+
+  // Job listings publik
   JOBS: "/jobs",
   JOB_DETAILS: (id: string) => `/jobs/${id}`,
 
-  // Student-specific routes
+  // Companies dan Universities publik
+  COMPANIES: "/companies",
+  COMPANY_DETAILS: (id: string) => `/companies/${id}`,
+  UNIVERSITIES: "/universities",
+  UNIVERSITY_DETAILS: (id: string) => `/universities/${id}`,
+
+  // Dashboard routes
+  DASHBOARD: {
+    // Student dashboard routes
+    STUDENT: {
+      INDEX: "/dashboard/student",
+      APPLICATIONS: "/dashboard/student/applications",
+      APPLICATION_DETAILS: (id: string) =>
+        `/dashboard/student/applications/${id}`,
+      SAVED_JOBS: "/dashboard/student/saved-jobs",
+      PROFILE: "/dashboard/student/profile",
+      SETTINGS: "/dashboard/student/settings",
+    },
+
+    // Company dashboard routes
+    COMPANY: {
+      INDEX: "/dashboard/company",
+      JOBS: {
+        INDEX: "/dashboard/company/jobs",
+        CREATE: "/dashboard/company/jobs/create",
+        EDIT: (id: string) => `/dashboard/company/jobs/${id}/edit`,
+        DETAILS: (id: string) => `/dashboard/company/jobs/${id}`,
+      },
+      APPLICATIONS: {
+        INDEX: "/dashboard/company/applications",
+        DETAILS: (id: string) => `/dashboard/company/applications/${id}`,
+      },
+      PROFILE: "/dashboard/company/profile",
+      SETTINGS: "/dashboard/company/settings",
+    },
+
+    // Admin dashboard routes
+    ADMIN: {
+      INDEX: "/dashboard/admin",
+      USERS: {
+        INDEX: "/dashboard/admin/users",
+        DETAILS: (id: string) => `/dashboard/admin/users/${id}`,
+      },
+      COMPANIES: {
+        INDEX: "/dashboard/admin/companies",
+        DETAILS: (id: string) => `/dashboard/admin/companies/${id}`,
+      },
+      UNIVERSITIES: {
+        INDEX: "/dashboard/admin/universities",
+        CREATE: "/dashboard/admin/universities/new",
+        EDIT: (id: string) => `/dashboard/admin/universities/${id}`,
+      },
+      SKILLS: {
+        INDEX: "/dashboard/admin/skills",
+        CREATE: "/dashboard/admin/skills/new",
+        EDIT: (id: string) => `/dashboard/admin/skills/${id}`,
+      },
+      SETTINGS: "/dashboard/admin/settings",
+    },
+  },
+
+  // Untuk backward compatibility dengan kode yang sudah ada
+  // Dashboard Index
+  DASHBOARD_STUDENT: "/dashboard/student",
+  DASHBOARD_COMPANY: "/dashboard/company",
+  DASHBOARD_ADMIN: "/dashboard/admin",
+
+  // Dashboard Student
   STUDENT_APPLICATIONS: "/dashboard/student/applications",
   STUDENT_SAVED_JOBS: "/dashboard/student/saved-jobs",
   STUDENT_PROFILE: "/dashboard/student/profile",
   STUDENT_SETTINGS: "/dashboard/student/settings",
 
-  // Company-specific routes
+  // Dashboard Company
   COMPANY_JOBS: "/dashboard/company/jobs",
   COMPANY_JOB_CREATE: "/dashboard/company/jobs/create",
   COMPANY_JOB_EDIT: (id: string) => `/dashboard/company/jobs/${id}/edit`,
@@ -62,7 +130,7 @@ export const PATHS = {
   COMPANY_PROFILE: "/dashboard/company/profile",
   COMPANY_SETTINGS: "/dashboard/company/settings",
 
-  // Admin-specific routes
+  // Dashboard Admin
   ADMIN_USERS: "/dashboard/admin/users",
   ADMIN_COMPANIES: "/dashboard/admin/companies",
   ADMIN_UNIVERSITIES: "/dashboard/admin/universities",

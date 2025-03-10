@@ -40,11 +40,70 @@ export const PATHS = {
   REGISTER: "/register",
   REGISTER_STUDENT: "/register-student",
   REGISTER_COMPANY: "/register-company",
+  FORGOT_PASSWORD: "/forgot-password",
+  RESET_PASSWORD: "/reset-password",
   DASHBOARD_STUDENT: "/dashboard/student",
   DASHBOARD_COMPANY: "/dashboard/company",
   DASHBOARD_ADMIN: "/dashboard/admin",
   JOBS: "/jobs",
   JOB_DETAILS: (id: string) => `/jobs/${id}`,
+
+  // Student-specific routes
+  STUDENT_APPLICATIONS: "/dashboard/student/applications",
+  STUDENT_SAVED_JOBS: "/dashboard/student/saved-jobs",
+  STUDENT_PROFILE: "/dashboard/student/profile",
+  STUDENT_SETTINGS: "/dashboard/student/settings",
+
+  // Company-specific routes
+  COMPANY_JOBS: "/dashboard/company/jobs",
+  COMPANY_JOB_CREATE: "/dashboard/company/jobs/create",
+  COMPANY_JOB_EDIT: (id: string) => `/dashboard/company/jobs/${id}/edit`,
+  COMPANY_APPLICATIONS: "/dashboard/company/applications",
+  COMPANY_PROFILE: "/dashboard/company/profile",
+  COMPANY_SETTINGS: "/dashboard/company/settings",
+
+  // Admin-specific routes
+  ADMIN_USERS: "/dashboard/admin/users",
+  ADMIN_COMPANIES: "/dashboard/admin/companies",
+  ADMIN_UNIVERSITIES: "/dashboard/admin/universities",
+  ADMIN_SKILLS: "/dashboard/admin/skills",
+  ADMIN_SETTINGS: "/dashboard/admin/settings",
+};
+
+// Job types
+export const JOB_TYPES = [
+  { value: "penuh-waktu", label: "Penuh Waktu" },
+  { value: "paruh-waktu", label: "Paruh Waktu" },
+  { value: "magang", label: "Magang" },
+  { value: "kontrak", label: "Kontrak" },
+  { value: "freelance", label: "Freelance" },
+];
+
+// Experience levels
+export const EXPERIENCE_LEVELS = [
+  { value: "pemula", label: "Pemula (0-2 tahun)" },
+  { value: "menengah", label: "Menengah (2-5 tahun)" },
+  { value: "senior", label: "Senior (5-10 tahun)" },
+  { value: "manajerial", label: "Manajerial (8+ tahun)" },
+  { value: "eksekutif", label: "Eksekutif (10+ tahun)" },
+];
+
+// Application status options
+export const APPLICATION_STATUS = [
+  { value: "menunggu", label: "Menunggu", color: "text-yellow-500" },
+  { value: "ditinjau", label: "Ditinjau", color: "text-blue-500" },
+  { value: "shortlist", label: "Shortlist", color: "text-indigo-500" },
+  { value: "wawancara", label: "Wawancara", color: "text-purple-500" },
+  { value: "ditawari", label: "Ditawari", color: "text-pink-500" },
+  { value: "diterima", label: "Diterima", color: "text-green-500" },
+  { value: "ditolak", label: "Ditolak", color: "text-red-500" },
+];
+
+// Pagination defaults
+export const PAGINATION = {
+  DEFAULT_PAGE: 1,
+  DEFAULT_PER_PAGE: 10,
+  PER_PAGE_OPTIONS: [10, 20, 50, 100],
 };
 
 export const APP_NAME = "Atlas Recruit";

@@ -28,11 +28,11 @@ export default function HomePage() {
               <Button
                 size="lg"
                 asChild
-                className="bg-primary text-primary-foreground hover:bg-primary/90 flex-1"
+                className="bg-primary z-10 text-primary-foreground hover:bg-primary/90 flex-1"
               >
                 <Link href={PATHS.JOBS}>Telusuri Lowongan</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="flex-1">
+              <Button size="lg" variant="outline" asChild className="z-10 flex-1">
                 <Link href={PATHS.REGISTER}>Daftar Sekarang</Link>
               </Button>
             </div>

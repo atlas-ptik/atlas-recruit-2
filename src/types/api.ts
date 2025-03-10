@@ -99,3 +99,4 @@ export interface AdminProfile extends BaseUser {
 }
 
 export type UserProfile = StudentProfile | CompanyProfile | AdminProfile;
+    
